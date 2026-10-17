@@ -363,3 +363,25 @@ body {
 .headline  {
    white-space: pre-line;
 }
+
+/* Portrait anchors the biography without adding imagery to the hero. */
+.about-heading {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+.about-heading h2 { margin: 0; }
+.about-portrait {
+  display: block;
+  width: 88px;
+  height: 88px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+@media (max-width: 600px) {
+  .about-heading { gap: 16px; }
+  .about-portrait { width: 72px; height: 72px; }
+}

@@ -1,30 +1,34 @@
-# João Mastrangelo — POC 01
+# João Mastrangelo
 
-Portfólio estático em HTML, CSS e JavaScript. A aplicação original não usa Angular; a estrutura foi mantida, sem dependências adicionais.
+Portfólio e currículo em português e inglês, implementados em HTML, CSS e JavaScript, sem dependências externas de build.
 
-## Visualização local
+## Executar e validar
 
-Requer Node.js 18 ou superior. Nesta pasta, execute `npm start` e abra http://127.0.0.1:4173. Não é necessário executar npm install.
+Requer Node.js 18 ou superior. Não é necessário npm install.
 
-- `npm run build`: gera os nove arquivos publicáveis em `dist/`.
-- `npm test`: valida destinos locais, âncoras, categorias e a alternância PT/EN.
+- `npm start`: abre o servidor em http://127.0.0.1:4173.
+- `npm test`: verifica links locais, traduções e conteúdo do currículo.
+- `npm run build`: copia os dez arquivos publicáveis para dist/.
 
-## Arquivos e manutenção
+## Manutenção
 
-- `index.html`, `style.css`, `script.js`: nova página inicial, tokens responsivos, textos PT/EN e renderização reutilizável das categorias.
-- `icons.svg`: ícones vetoriais compartilhados.
-- `curriculo.html`, `curriculo.css`, `curriculo.js`: currículo original preservado, com foto, histórico profissional, formação, competências, impressão e idioma. O logotipo retorna ao início.
-- `perfil.jpg`: foto original preservada apenas no currículo.
-- `build.cjs`, `serve.cjs`, `portfolio.test.cjs`, `package.json`, `.gitignore`: build estático, servidor e verificações sem dependências.
+- index.html, style.css e script.js: página inicial, tokens de design, textos PT/EN e categorias de projetos.
+- curriculo.html, curriculo.css e curriculo.js: currículo, impressão e traduções técnicas com chaves explícitas.
+- perfil-home.jpg: foto fornecida pelo titular, usada nas duas páginas. perfil.jpg: imagem anterior preservada.
+- icons.svg: ícones compartilhados.
+- build.cjs, serve.cjs e portfolio.test.cjs: ferramentas locais sem dependências.
 
-A preferência PT/EN continua salva na chave `site-language`. As categorias ainda não têm projetos publicados e abrem uma informação sobre disponibilidade, sem links vazios. Adicione conteúdo real à estrutura `categories` em script.js ao evoluir o site.
+A preferência de idioma usa localStorage na chave site-language. O currículo inclui contatos completos e legíveis para impressão e exportação. As categorias aguardam conteúdo real; não foram criados projetos fictícios. Fontes da home: Source Serif 4 e Inter, com fallback local.
 
-Design: marfim, azul petróleo, azul vibrante e coral; títulos Source Serif 4 e textos Inter, carregados pelo Google Fonts com fontes locais de fallback. Home sem fotos ou elementos decorativos, conforme briefing. Menu móvel permanece visível; foco de teclado e redução de movimento são suportados.
+## Conteúdo aprovado
 
-## GitHub Pages
+Nome público: João Mastrangelo. Cargo no Itaú confirmado como atual pelo titular. Experiência em pesquisa econômica, ciência de dados e aplicações de IA tradicional e generativa. Estágio no Safra em Macroeconomia. Competências priorizadas: Macroeconomia, Econometria, Ciência de Dados, Inteligência Artificial, GenAI, Aprendizado de Máquina, Python e AWS.
 
-O checkout foi obtido de https://github.com/joaomast/joaomast.github.io, branch main. Caminhos relativos e `.nojekyll` preservam compatibilidade com Pages. Para publicação a partir de branch, os arquivos da raiz continuam prontos para main / (root); alternativamente, publique o conteúdo de dist com um workflow de Pages. A configuração efetiva em Settings > Pages não foi alterada nem confirmada via API autenticada. Nenhum push ou deploy foi realizado.
+As entradas AWS AI Practitioner, formação Degreed/IOX/Itaú e DataCamp foram retiradas a pedido do titular. Não foram publicados números de desempenho de fundos, métricas de conversão, informações internas ou ferramentas corporativas como projetos pessoais. As datas de formação seguem o conteúdo fornecido; a conclusão da graduação não recebeu confirmação adicional nesta revisão.
 
-## Validação e limites
+## Publicação
 
-Build e testes automatizados executados. Prévia HTTP local retorna 200. PT/EN verificado no navegador; largura móvel de 390 px sem transbordamento horizontal. Links externos usam o LinkedIn original e o e-mail/GitHub confirmados pelo titular; disponibilidade externa e entrega de e-mail não foram verificadas. A revisão visual responsiva não substitui uma auditoria completa em dispositivos reais.
+Repositório: https://github.com/joaomast/joaomast.github.io
+Site: https://joaomast.github.io/
+
+GitHub Pages publica os arquivos da raiz da branch main. Os caminhos relativos e .nojekyll são preservados. dist/ é uma saída local opcional e está ignorada pelo Git. Não envie node_modules ou arquivos temporários.
