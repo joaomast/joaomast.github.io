@@ -1,0 +1,1 @@
+{"name":"joao-mastrangelo-portfolio","private":true,"scripts":{"start":"node serve.cjs","build":"node build.cjs","test":"node --test"}}

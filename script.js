@@ -1,28 +1,27 @@
-const translations = {
-  'Pular para o conteúdo':'Skip to content','Experiência':'Experience','Formação':'Education','Competências':'Skills','Contato':'Contact','CURRÍCULO':'CURRICULUM VITAE',
-  'Cientista de dados no Banco Itaú. Bacharel em Economia pela Unicamp, com experiência em pesquisa econômica, estratégia e modelagem de risco de crédito.':'Data Scientist at Banco Itaú. Economics graduate from Unicamp, with experience in economic research, strategy and credit risk modeling.',
-  'Experiência profissional':'Professional experience','AGO 2025 — ATUAL':'AUG 2025 — PRESENT','ATUAL':'CURRENT','SET 2023 — AGO 2025':'SEP 2023 — AUG 2025','MAR 2023 — AGO 2023':'MAR 2023 — AUG 2023','JAN 2023 — FEV 2023':'JAN 2023 — FEB 2023','Estágio':'Internship',
-  'Formação acadêmica':'Education','Bacharelado em Economia':"Bachelor’s Degree in Economics",'Experiência acadêmica':'Academic experience',
-  'Monitoria em Econometria de Séries Temporais':'Teaching Assistant — Time Series Econometrics','3 semestres':'3 semesters',
-  'Monitoria em Introdução à Econometria — mestrado':'Teaching Assistant — Introduction to Econometrics (MSc program)','1 semestre':'1 semester',
-  'Monitoria em Econometria':'Teaching Assistant — Econometrics','Iniciação científica em História Econômica':'Undergraduate Research — Economic History','2 semestres':'2 semesters',
-  'CERTIFICAÇÃO':'CERTIFICATION','· Outubro de 2022':'· October 2022','Macroeconomia':'Macroeconomics','Estatística':'Statistics','Econometria':'Econometrics','Aprendizado de Máquina':'Machine Learning','Voltar ao topo ↑':'Back to top ↑'
+const copy = {
+ pt: {skip:'Pular para o conteúdo',home:'Início',about:'Sobre',projects:'Projetos',cv:'Currículo',contact:'Contato',eyebrow:'ECONOMIA · PESQUISA · EDUCAÇÃO',headline:'Macroeconomia, mercados financeiros\ne métodos quantitativos.',viewProjects:'Ver projetos',aboutMe:'Sobre mim',bio:'Cientista de dados no Banco Itaú. Bacharel em Economia pela Unicamp, com experiência em pesquisa econômica, estratégia e modelagem de risco de crédito.',purpose:'Este site reúne meus projetos, materiais de estudo e atividades profissionais e acadêmicas.',more:'Saiba mais',experience:'Experiência',experienceText:'Pesquisa econômica, estratégia e ciência de dados.',education:'Formação',educationText:'Bacharelado em Economia · Unicamp.',interests:'Interesses',interestsText:'Macroeconomia, econometria, mercados financeiros e métodos quantitativos.',contactText:'Entre em contato ou acompanhe meu trabalho.',details:'Sobre a categoria',pending:'Os materiais desta categoria serão adicionados aqui.',educationCategory:'Educação',educationDescription:'Materiais de estudo, notas e resoluções.',researchCategory:'Pesquisa',researchDescription:'Análises, estudos e projetos.',codeCategory:'Dados e Programação',codeDescription:'Projetos com dados e aplicações.'},
+ en: {skip:'Skip to content',home:'Home',about:'About',projects:'Projects',cv:'Résumé',contact:'Contact',eyebrow:'ECONOMICS · RESEARCH · EDUCATION',headline:'Macroeconomics, financial markets\nand quantitative methods.',viewProjects:'View projects',aboutMe:'About me',bio:'Data Scientist at Banco Itaú. Economics graduate from Unicamp, with experience in economic research, strategy and credit risk modeling.',purpose:'This site brings together my projects, study materials, and professional and academic activities.',more:'Learn more',experience:'Experience',experienceText:'Economic research, strategy and data science.',education:'Education',educationText:'Bachelor’s Degree in Economics · Unicamp.',interests:'Interests',interestsText:'Macroeconomics, econometrics, financial markets and quantitative methods.',contactText:'Get in touch or follow my work.',details:'About this category',pending:'Materials in this category will be added here.',educationCategory:'Education',educationDescription:'Study materials, notes and solutions.',researchCategory:'Research',researchDescription:'Analyses, studies and projects.',codeCategory:'Data and Programming',codeDescription:'Data projects and applications.'}
 };
-const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT), textNodes=[];
-while(walker.nextNode()){const node=walker.currentNode,key=node.nodeValue.trim();if(Object.hasOwn(translations,key))textNodes.push({node,original:node.nodeValue,key});}
-const languageButton=document.getElementById('language');
-function setLanguage(language){
-  const english=language==='en';document.documentElement.lang=english?'en':'pt-BR';
-  textNodes.forEach(({node,original,key})=>{node.nodeValue=english?original.replace(key,translations[key]):original;});
-  languageButton.textContent=english?'Português':'English';languageButton.lang=english?'pt-BR':'en';
-  languageButton.setAttribute('aria-label',english?'Mudar para português':'Switch to English');
-  document.querySelector('nav').setAttribute('aria-label',english?'Main navigation':'Navegação principal');
-  document.querySelector('.portrait').alt=english?'Portrait of João Mastrangelo':'Foto de João Mastrangelo';
-  document.querySelector('meta[name="description"]').content=english?'João Mastrangelo. Economic research, data science, professional experience and education.':'João Mastrangelo. Pesquisa econômica, ciência de dados, experiência profissional e formação.';
-  try{localStorage.setItem('site-language',language);}catch{}
+// Each category can receive real projects without duplicating card markup.
+const categories = [{id:'education',title:'educationCategory',description:'educationDescription',items:[]},{id:'research',title:'researchCategory',description:'researchDescription',items:[]},{id:'code',title:'codeCategory',description:'codeDescription',items:[]}];
+const grid=document.getElementById('project-categories');
+for(const category of categories){
+ const card=document.createElement('article');card.className='project-card';
+ card.innerHTML=`<svg class="icon" aria-hidden="true"><use href="icons.svg#${category.id}"></use></svg><h3 data-i18n="${category.title}"></h3><p data-i18n="${category.description}"></p><details><summary data-i18n="details"></summary><p data-i18n="pending"></p></details>`;
+ grid.append(card);
 }
-languageButton.addEventListener('click',()=>setLanguage(document.documentElement.lang==='en'?'pt':'en'));
-try{if(localStorage.getItem('site-language')==='en')setLanguage('en');}catch{}
-const links=[...document.querySelectorAll('nav a')];
-const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting){for(const link of links){if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');}}}},{rootMargin:'-10% 0px -60% 0px',threshold:0});
-document.querySelectorAll('section[id]').forEach(section=>observer.observe(section));
+function setLanguage(language){
+ const lang=language==='en'?'en':'pt';document.documentElement.lang=lang==='pt'?'pt-BR':'en';
+ document.querySelectorAll('[data-i18n]').forEach(element=>{element.textContent=copy[lang][element.dataset.i18n];});
+ document.querySelectorAll('[data-language]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.language===lang)));
+ document.querySelector('nav').setAttribute('aria-label',lang==='en'?'Main navigation':'Navegação principal');
+ document.querySelector('.languages').setAttribute('aria-label',lang==='en'?'Language':'Idioma');
+ document.querySelector('.brand').setAttribute('aria-label',lang==='en'?'João Mastrangelo — home':'João Mastrangelo — início');
+ document.title=lang==='en'?'João Mastrangelo | Economics, Research and Education':'João Mastrangelo | Economia, Pesquisa e Educação';
+ document.querySelector('meta[name="description"]').content='João Mastrangelo. '+copy[lang].headline.replace('\n',' ');
+ try{localStorage.setItem('site-language',lang);}catch{}
+}
+document.querySelectorAll('[data-language]').forEach(button=>button.addEventListener('click',()=>setLanguage(button.dataset.language)));
+let initial='pt';try{initial=localStorage.getItem('site-language')||'pt';}catch{}setLanguage(initial);
+const links=[...document.querySelectorAll('nav a[href^="#"]')];
+if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});}}},{rootMargin:'-5% 0px -55% 0px',threshold:0});document.querySelectorAll('section[id],footer[id]').forEach(section=>observer.observe(section));}
